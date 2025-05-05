@@ -8,7 +8,6 @@ import { Button } from '../components/ui/button'
 
 
 import { unstable_ViewTransition as ViewTransition } from 'react';
-import { Layout } from '../Layout';
 import { Link } from 'react-router';
 
 function App()
@@ -17,7 +16,7 @@ function App()
 
 
     return (
-        <Layout>
+        <ViewTransition>
             <div>
                 <h1>HOME PAGE</h1>
                 <Link to="/test">Go To: Test Page</Link>
@@ -30,7 +29,7 @@ function App()
                     </ViewTransition>
                 )}
             </div>
-        </Layout>
+        </ViewTransition>
     )
 }
 

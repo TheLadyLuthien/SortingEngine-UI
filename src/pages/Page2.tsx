@@ -11,24 +11,27 @@ import { unstable_ViewTransition as ViewTransition } from 'react';
 import { Layout } from '../Layout';
 import { Link } from 'react-router';
 import { ModeToggle } from '@/components/UiModeToggle';
+import { Images, Pencil } from 'lucide-react';
 
 function AnotherPage()
 {
     const [state, setState] = useState(false)
 
     return (
-        <div>
-            <h1>TEST PAGE</h1>
-            <Link to="/">Go TO: Home</Link>
-            <p>Another PAGE!!!</p>
-            <ModeToggle></ModeToggle>
-            <Button onClick={() => startTransition(() => setState(!state))}>State {state}</Button>
-            {(state) && (
-                <ViewTransition>
-                    <Button>TADA</Button>
+        <ViewTransition>
+            <div>
+                <h1>TEST PAGE</h1>
+                <Link to="/">Go TO: Home</Link>
+                <p>Another PAGE!!!</p>
+                <ModeToggle></ModeToggle>
+                <Button onClick={() => startTransition(() => setState(!state))}>State {state}</Button>
+                <ViewTransition default="slide-forward">
+                    <Button>
+                        {(state) ? <Pencil className="size-4" /> : <Images className="size-4" />}
+                    </Button>
                 </ViewTransition>
-            )}
-        </div>
+            </div>
+        </ViewTransition>
     )
 }
 

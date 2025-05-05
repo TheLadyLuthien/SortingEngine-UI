@@ -3,9 +3,9 @@ import { Layout } from "@/Layout";
 import { Outlet } from "react-router";
 
 
-export function BrowseLayout()
+export function SortLayout()
 {
-    ModeThemeProvider()
+    ModeThemeProvider("sort")
     
     return (
         <Layout>

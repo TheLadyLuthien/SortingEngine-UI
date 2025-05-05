@@ -3,7 +3,7 @@ import { SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupContent, S
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 import { ModePicker } from "./ModePicker"
 
-import { unstable_ViewTransition as ViewTransition } from 'react';
+import { ReactNode, unstable_ViewTransition as ViewTransition } from 'react';
 import { SettingsSidebarFooter } from "../SettingsSidebarFooter";
 import { Separator } from "../ui/separator";
 import { matchPath, NavLink, useLocation, useMatch } from "react-router";
@@ -20,15 +20,15 @@ const data = {
     navMain: [
         {
             title: "Getting Started",
-            url: "/",
+            url: "#",
             items: [
                 {
                     title: "Home",
-                    url: "/",
+                    url: "/browse",
                 },
                 {
                     title: "Test",
-                    url: "/test",
+                    url: "/browse/foo",
                 },
             ],
         },
@@ -38,7 +38,7 @@ const data = {
             items: [
                 {
                     title: "Routing",
-                    url: "#",
+                    url: "/sort",
                 },
                 {
                     title: "Data Fetching",

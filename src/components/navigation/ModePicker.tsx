@@ -1,8 +1,10 @@
-import { Check, ChevronsUpDown, GalleryVerticalEnd, Pencil } from "lucide-react";
+import { Check, ChevronsUpDown, GalleryVerticalEnd, Images, Pencil } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuAction, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
 import { TabsList, TabsTrigger } from "../ui/tabs";
+import { matchPath, NavLink, useLocation, useNavigate } from "react-router";
 
+import { unstable_ViewTransition as ViewTransition } from "react";
 
 // export function ModePickerButtons()
 // {
@@ -51,6 +53,18 @@ import { TabsList, TabsTrigger } from "../ui/tabs";
 
 export function ModePicker()
 {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    function isBrowse()
+    {
+        return (location.pathname.startsWith("/browse"));
+    }
+    function isSort()
+    {
+        return (location.pathname.startsWith("/sort"));
+    }
+
     return (
         <SidebarMenu>
             <SidebarMenuItem>
@@ -61,7 +75,9 @@ export function ModePicker()
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                         >
                             <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-sidebar-primary-foreground">
-                                <Pencil className="size-4" />
+                                <ViewTransition name="sidebar-mode-picker-icon" share="zoom-back">
+                                    {isSort() ? <Pencil className="size-4" /> : <Images className="size-4" />}
+                                </ViewTransition>
                             </div>
                             <div className="flex flex-col gap-0.5 leading-none">
                                 <span className="font-semibold">Sorting Engine</span>
@@ -74,17 +90,17 @@ export function ModePicker()
                         className="w-full"
                         align="center"
                     >
-                        <DropdownMenuItem className="w-full">
-                            Sort <Check className="ml-auto" />
+                        <DropdownMenuItem onSelect={() => (!isSort()) && navigate("/sort")} className="w-full">
+                            Sort {isSort() && <Check className="ml-auto inline-block" />}
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="w-full">
-                            Browse
+                        <DropdownMenuItem onSelect={() => (!isBrowse()) && navigate("/browse")} className="w-full">
+                            Browse {isBrowse() && <Check className="ml-auto inline-block" />}
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
 
             </SidebarMenuItem>
-        </SidebarMenu>
+        </SidebarMenu >
         // <TabsList className="w-full grid grid-cols-2">
         //     <TabsTrigger value="sort">Sort</TabsTrigger>
         //     <TabsTrigger value="browse">Browse</TabsTrigger>
