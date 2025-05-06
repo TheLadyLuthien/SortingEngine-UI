@@ -16,20 +16,18 @@ function App()
 
 
     return (
-        <ViewTransition>
-            <div>
-                <h1>HOME PAGE</h1>
-                <Link to="/test">Go To: Test Page</Link>
-                <p>foobar</p>
-                <Button onClick={() => startTransition(() => setState(!state))}>State {state}</Button>
+        <div>
+            <h1>HOME PAGE</h1>
+            <Link to="/test">Go To: Test Page</Link>
+            <p>foobar</p>
+            <Button onClick={() => startTransition(() => setState(!state))}>State {state}</Button>
 
-                {(state) && (
-                    <ViewTransition>
-                        <Button>Foobar</Button>
-                    </ViewTransition>
-                )}
-            </div>
-        </ViewTransition>
+            {(state) && (
+                <ViewTransition>
+                    <Button>Foobar</Button>
+                </ViewTransition>
+            )}
+        </div>
     )
 }
 

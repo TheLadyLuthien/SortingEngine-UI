@@ -1,10 +1,15 @@
 import { Check, ChevronsUpDown, GalleryVerticalEnd, Images, Pencil } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { SidebarMenu, SidebarMenuAction, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
 import { TabsList, TabsTrigger } from "../ui/tabs";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu"
 import { matchPath, NavLink, useLocation, useNavigate } from "react-router";
 
 import { unstable_ViewTransition as ViewTransition } from "react";
+import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "../ui/sidebar";
 
 // export function ModePickerButtons()
 // {
@@ -81,7 +86,7 @@ export function ModePicker()
                             </div>
                             <div className="flex flex-col gap-0.5 leading-none">
                                 <span className="font-semibold">Sorting Engine</span>
-                                <span className="">Browse</span>
+                                <span className="">{isSort() ? "Sort" : "Browse"}</span>
                             </div>
                             <ChevronsUpDown className="ml-auto" />
                         </SidebarMenuButton>

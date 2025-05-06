@@ -18,20 +18,18 @@ function AnotherPage()
     const [state, setState] = useState(false)
 
     return (
-        <ViewTransition>
-            <div>
-                <h1>TEST PAGE</h1>
-                <Link to="/">Go TO: Home</Link>
-                <p>Another PAGE!!!</p>
-                <ModeToggle></ModeToggle>
-                <Button onClick={() => startTransition(() => setState(!state))}>State {state}</Button>
-                <ViewTransition default="slide-forward">
-                    <Button>
-                        {(state) ? <Pencil className="size-4" /> : <Images className="size-4" />}
-                    </Button>
-                </ViewTransition>
-            </div>
-        </ViewTransition>
+
+        <div>
+            <h1>TEST PAGE</h1>
+            <Link to="/">Go TO: Home</Link>
+            <p>Another PAGE!!!</p>
+            <Button onClick={() => startTransition(() => setState(!state))}>State {state}</Button>
+            <ViewTransition>
+                <Button>
+                    {(state) ? <Pencil className="size-4" /> : <Images className="size-4" />}
+                </Button>
+            </ViewTransition>
+        </div>
     )
 }
 
