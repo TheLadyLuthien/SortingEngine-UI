@@ -81,10 +81,20 @@ jobs:
         run: pnpm i
       - name: Build with Vite.js
         run: pnpm run build
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      # - name: Upload artifact
+      #   uses: actions/upload-pages-artifact@v3
+      #   with:
+      #     path: ./dist
+      - name: Upload Files
+        id: upload
+        uses: Creepios/sftp-action@v1.0.3
         with:
-          path: ./dist
+          host: secret.TEST
+          port: 22
+          username: 'root'
+          password: 'password'
+          localPath: './dist/index.js'
+          remotePath: './'
 
   # Deployment job
   deploy:
