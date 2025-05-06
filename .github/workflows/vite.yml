@@ -81,6 +81,12 @@ jobs:
         run: pnpm i
       - name: Build with Vite.js
         run: pnpm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build_artifact
+          path: ./dist
+          retention-days: 20
+      
       # - name: Upload artifact
       #   uses: actions/upload-pages-artifact@v3
       #   with:
@@ -95,6 +101,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: build_artifact
+      - name: Display structure of downloaded files
+        run: ls -R
       - name: Upload Files
         id: upload
         uses: Creepios/sftp-action@v1.0.3
