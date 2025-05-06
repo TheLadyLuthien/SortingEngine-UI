@@ -1,0 +1,94 @@
+name: Deploy site to Dreamhost
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "dreamhost"
+  cancel-in-progress: false
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      # - name: Detect package manager
+      #   id: detect-package-manager
+      #   run: |
+      #     if [ -f "${{ github.workspace }}/yarn.lock" ]; then
+      #       echo "manager=yarn" >> $GITHUB_OUTPUT
+      #       echo "command=install" >> $GITHUB_OUTPUT
+      #       echo "runner=yarn" >> $GITHUB_OUTPUT
+      #       exit 0
+      #     elif [ -f "${{ github.workspace }}/package.json" ]; then
+      #       echo "manager=npm" >> $GITHUB_OUTPUT
+      #       echo "command=ci" >> $GITHUB_OUTPUT
+      #       echo "runner=npx --no-install" >> $GITHUB_OUTPUT
+      #       exit 0
+      #     else
+      #       echo "Unable to determine package manager"
+      #       exit 1
+      #     fi
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4.1.0
+        with:
+          version: "10.10.0"
+        
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: pnpm
+          
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Install dependencies
+        run: pnpm i
+      - name: Build with Vite.js
+        run: pnpm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build_artifact
+          path: ./dist
+          retention-days: 20
+      
+
+  # Deployment job
+  deploy:
+    environment:
+      name: prod
+      # url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: build_artifact
+          path: "./dist"
+      # - name: Display structure of downloaded files
+      #   run: ls -R
+      - name: Upload Files
+        id: upload
+        uses: Creepios/sftp-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTNAME }}
+          port: 22
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_KEY }}
+          localPath: './dist'
+          remotePath: '~/sortingengine.luthienfinch.com/'
