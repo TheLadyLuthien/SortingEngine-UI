@@ -66,6 +66,7 @@ jobs:
           name: build_artifact
           path: ./dist
           retention-days: 20
+
       
 
   # Deployment job
@@ -91,4 +92,4 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_KEY }}
           localPath: './dist'
-          remotePath: '~/sortingengine.luthienfinch.com/'
+          remotePath: 'sortingengine.luthienfinch.com/'
