@@ -99,9 +99,9 @@ jobs:
         id: upload
         uses: Creepios/sftp-action@v1.0.3
         with:
-          host: secrets.TEST
+          host: ${{ secrets.HOSTNAME }}
           port: 22
-          username: 'root'
-          password: 'password'
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_KEY }}
           localPath: './dist/'
           remotePath: '~/sortingengine.luthienfinch.com/'
