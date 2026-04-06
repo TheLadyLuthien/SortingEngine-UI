@@ -9,7 +9,7 @@ import { Button } from '../components/ui/button'
 
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import { Layout } from '../Layout';
-import { Link } from 'react-router';
+import { Link, useLoaderData } from 'react-router';
 import { ModeToggle } from '@/components/UiModeToggle';
 import { Images, Pencil } from 'lucide-react';
 
@@ -17,12 +17,14 @@ function AnotherPage()
 {
     const [state, setState] = useState(false)
 
+    const data = useLoaderData();
+    console.log(data);
     return (
 
         <div>
             <h1>TEST PAGE</h1>
             <Link to="/">Go TO: Home</Link>
-            <p>Another PAGE!!!</p>
+            <p>{JSON.stringify(data)}</p>
             <Button onClick={() => startTransition(() => setState(!state))}>State {state}</Button>
             <ViewTransition>
                 <Button>

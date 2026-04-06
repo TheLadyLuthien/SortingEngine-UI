@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+
+<body>
+    <button id="foo">Test</button>
+    
+    <input id="key_input" type="password" autocomplete="none">
+    <button id="save">Save</button>
+
+    <script>
+        function getApiKey()
+        {
+            return localStorage.getItem("api_key");
+        }
+
+        document.getElementById("foo").addEventListener("click", async () =>
+        {
+            const headers = new Headers();
+
+            headers.append("Authorization", "Bearer " + getApiKey());
+
+            const response = await fetch("https://127.0.0.1:7344/api/secure/test", {
+                method: "GET",
+                headers: headers,
+                // body: JSON.stringify({ username: "example" }),
+                // …
+            });
+
+            console.log(await response.json());
+        });
+
+        document.getElementById("save").addEventListener("click", async () =>
+        {
+            // const headers = new Headers();
+
+            // headers.append("Authentication", "Basic " + btoa("foobar"))
+
+            // const response = await fetch("https://127.0.0.1:7344/api/secure/test", {
+            //     method: "GET",
+            //     headers: headers,
+            //     // body: JSON.stringify({ username: "example" }),
+            //     // …
+            // });
+
+            // console.log(await response.json());
+
+            localStorage.setItem("api_key", (document.getElementById("key_input").value));
+        });
+    </script>
+</body>
+
+</html>
